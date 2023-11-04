@@ -1,7 +1,6 @@
 package io.github.denkoch.mycosts.repository;
 
 import io.github.denkoch.mycosts.entities.Category;
-import io.github.denkoch.mycosts.entities.Payment;
 
 import java.util.*;
 

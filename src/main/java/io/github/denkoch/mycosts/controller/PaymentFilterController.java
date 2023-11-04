@@ -1,7 +1,6 @@
 package io.github.denkoch.mycosts.controller;
 
 import io.github.denkoch.mycosts.entities.Category;
-import io.github.denkoch.mycosts.entities.PaymentType;
 import io.github.denkoch.mycosts.service.CategoryService;
 import io.github.denkoch.mycosts.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/users/{id}/payments")
@@ -55,9 +52,6 @@ public class PaymentFilterController {
                                @RequestParam(value = "to-date", required = false) LocalDate toDate,
                                @RequestParam(value = "category-id", defaultValue = "0", required = false) Integer categoryId,
                                RedirectAttributes redirectAttributes) {
-
-//        if (fromDate == null) fromDate = LocalDate.MIN;
-//        if (toDate == null) toDate = LocalDate.now();
 
         redirectAttributes.addFlashAttribute("from-date", fromDate);
         redirectAttributes.addFlashAttribute("to-date", toDate);

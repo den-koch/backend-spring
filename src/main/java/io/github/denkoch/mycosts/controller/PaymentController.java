@@ -8,15 +8,10 @@ import io.github.denkoch.mycosts.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.Binding;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -69,20 +64,5 @@ public class PaymentController {
         }
         return "redirect:payments";
     }
-
-
-//    @RequestMapping(value = "/payments", method = RequestMethod.POST, params = {"filter"})
-//    public String postPayments(@RequestParam(value = "from-date", required = false) LocalDate fromDate,
-//                               @RequestParam(value = "to-date", required = false) LocalDate toDate,
-//                               @RequestParam(value = "category-id", required = false) Integer categoryId,
-//                               RedirectAttributes redirectAttributes) {
-//
-//        redirectAttributes.addFlashAttribute("from-date", fromDate);
-//        redirectAttributes.addFlashAttribute("to-date", toDate);
-//        redirectAttributes.addFlashAttribute("category-id", categoryId);
-//
-//        return "redirect:payments/filter";
-//    }
-
 
 }
