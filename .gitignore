@@ -3,7 +3,6 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-
 *.zip
 *.tar.gz
 *.rar
@@ -43,8 +42,10 @@ pom.xml.bak
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
+.mvn
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+mvnw*
 
 ##############################
 ## IntelliJ
