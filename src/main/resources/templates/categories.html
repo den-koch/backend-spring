@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+<body>
+<h2>Categories</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Label</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category:${categories}">
+        <td th:text="${category.id}"/>
+        <td th:text="${category.label}"/>
+    </tr>
+    </tbody>
+</table>
+<br>
+<form action="#" th:action="@{/users/{id}/categories(id=${id})}"
+      th:object="${category}" method="post">
+    <div>
+        <input type="hidden" th:field="*{id}"/>
+    </div>
+    <div>
+        <label for="category-label">Label:</label>
+        <input type="text" th:field="*{label}" id="category-label"/>
+    </div>
+    <div>
+        <button type="submit" name = "add" class="button">Add</button>
+    </div>
+</form>
+<br>
+<form action="#" th:action="@{/users/{id}/categories(id=${id})}" method="post">
+    <div>
+        <label for="category-id">Id:</label>
+        <input type="number" name="category-id" id="category-id"/>
+    </div>
+    <div>
+        <button type="submit" name="delete" class="button">Delete</button>
+    </div>
+</form>
+</body>
+</html>

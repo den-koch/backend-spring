@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payments</title>
+</head>
+<body>
+<h2>Payments</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Money</th>
+        <th>Date</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment:${payments}">
+        <td th:text="${payment.id}"/>
+        <td th:text="${payment.paymentType.value}"/>
+        <td th:text="${payment.moneyAmount}"/>
+        <td th:text="${#temporals.format(payment.dateTime, 'dd.MM.yyyy HH:mm')}"/>
+        <td th:text="${payment.category.label}"/>
+    </tr>
+    </tbody>
+</table>
+<h3>Filter:</h3>
+<form action="#" th:action="@{/users/{id}/payments/filter(id=${id})}" method="post">
+    <div>
+        Date:
+        <table>
+            <thead>
+            <tr>
+                <th>From:</th>
+                <th>To:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="date" name="from-date" id="from-date"></td>
+                <td><input type="date" name="to-date" id="to-date"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        Category:
+        <select name="category-id">
+            <option value="0">Select...</option>
+            <option th:each="category : ${allCategories}" th:value="${category.id}"
+                    th:text="${category.label}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit" name="filter" class="button">Filter</button>
+    </div>
+</form>
+
+<h3>Add payment:</h3>
+<form action="#" th:action="@{/users/{id}/payments(id=${id})}"
+      th:object="${payment}" method="post">
+    <div>
+        <input type="hidden" th:field="*{id}"/>
+    </div>
+    <div>
+        <label>Type:</label>
+        <label>
+            <select th:field="*{paymentType}">
+                <option th:each="type : ${allPaymentsTypes}" th:value="${type}" th:text="${type.value}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label for="payment-moneyAmount">Money amount:</label>
+        <input type="number" th:field="*{moneyAmount}" id="payment-moneyAmount"/>
+    </div>
+    <div>
+        <label for="payment-date">Date:</label>
+        <input type="datetime-local" th:field="*{dateTime}" id="payment-date"/>
+    </div>
+    <div>
+        <label>Category:</label>
+        <label>
+            <select id="category-id" name="category-id">
+                <option th:each="category : ${allCategories}" th:value="${category.id}"
+                        th:text="${category.label}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <button type="submit" name="add" class="button">Add</button>
+    </div>
+</form>
+<h3>Edit payment:</h3>
+<form action="#" th:action="@{/users/{id}/payments(id=${id})}" method="post">
+    <div>
+        <label for="payment-id">Id:</label>
+        <input type="number" name="payment-id" id="payment-id"/>
+    </div>
+    <div>
+        <button type="submit" name="edit" class="button">Edit</button>
+    </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filters</title>
+</head>
+<body>
+<form action="#" th:action="@{/users/{id}/payments/filter(id=${id})}" method="post">
+    <div>
+        Date:
+        <table>
+            <thead>
+            <tr>
+                <th>From:</th>
+                <th>To:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="date" name="from-date" id="from-date"></td>
+                <td><input type="date" name="to-date" id="to-date"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        Category:
+        <select name="category-id">
+            <option value="0">Select...</option>
+            <option th:each="category : ${allCategories}" th:value="${category.id}"
+                    th:text="${category.label}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit" name="filter" class="button">Filter</button>
+    </div>
+</form>
+<br>
+<div>
+    <strong>Date:</strong>
+    <div>From:
+        <span th:unless="${fromDate==null}" th:text="${#temporals.format(fromDate, 'dd.MM.yyyy')}"></span>
+        <span th:if="${fromDate==null}">First</span>
+    </div>
+    <div>To:
+        <span th:unless="${toDate==null}" th:text="${#temporals.format(toDate, 'dd.MM.yyyy')}"></span>
+        <span th:if="${toDate==null}">Last</span>
+    </div>
+</div>
+<div><strong>Category:</strong>
+    <span th:text="${category==null?'All':category.label}"></span>
+</div>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Money</th>
+        <th>Date</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment:${payments}">
+        <td th:text="${payment.id}"/>
+        <td th:text="${payment.paymentType.value}"/>
+        <td th:text="${payment.moneyAmount}"/>
+        <td th:text="${#temporals.format(payment.dateTime, 'dd.MM.yyyy HH:mm')}"/>
+        <td th:text="${payment.category.label}"/>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment info</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Money</th>
+        <th>Date</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${payment.id}"/>
+        <td th:text="${payment.paymentType.value}"/>
+        <td th:text="${payment.moneyAmount}"/>
+        <td th:text="${#temporals.format(payment.dateTime, 'dd.MM.yyyy HH:mm')}"/>
+        <td th:text="${payment.category.label}"/>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
