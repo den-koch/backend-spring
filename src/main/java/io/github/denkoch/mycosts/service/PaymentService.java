@@ -10,9 +10,9 @@ import java.util.Collection;
 @Service
 public class PaymentService {
 
-    private final PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
 
-    public PaymentService(PaymentRepository paymentRepository) {
+    public void setPaymentRepository(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
 

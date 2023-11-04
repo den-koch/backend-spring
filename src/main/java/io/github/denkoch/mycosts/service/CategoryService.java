@@ -2,15 +2,14 @@ package io.github.denkoch.mycosts.service;
 
 import io.github.denkoch.mycosts.entities.Category;
 import io.github.denkoch.mycosts.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 
 public class CategoryService {
-    private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public Collection<Category> getCategories() {
         return categoryRepository.findAll();

@@ -11,8 +11,8 @@ public class BusinessConfig {
 
     @Bean
     @Scope("singleton")
-    public CategoryService categoryService(CategoryRepository categoryRepository) {
-        return new CategoryService(categoryRepository);
+    public CategoryService categoryService() {
+        return new CategoryService();
     }
 
     @Bean

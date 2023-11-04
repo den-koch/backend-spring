@@ -5,7 +5,6 @@ import io.github.denkoch.mycosts.entities.Payment;
 import io.github.denkoch.mycosts.entities.PaymentType;
 import io.github.denkoch.mycosts.service.CategoryService;
 import io.github.denkoch.mycosts.service.PaymentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +17,13 @@ import java.util.List;
 @RequestMapping(value = "/users/{id}")
 public class PaymentController {
 
-    @Autowired
-    private PaymentService paymentService;
-    @Autowired
-    private CategoryService categoryService;
+    private final PaymentService paymentService;
+    private final CategoryService categoryService;
+
+    public PaymentController(PaymentService paymentService, CategoryService categoryService) {
+        this.paymentService = paymentService;
+        this.categoryService = categoryService;
+    }
 
     @ModelAttribute("id")
     public Integer populateId(@PathVariable Integer id) {
