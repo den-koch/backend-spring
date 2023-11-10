@@ -15,12 +15,12 @@ public class PaymentRepository implements ObjectRepository<Payment> {
 
     private Map<Integer, Payment> repository = new HashMap<>();
 
-    {
+    public PaymentRepository(){
         repository.put(1, new Payment(1, LocalDateTime.now(), 300, new Category(1, "Food"), PaymentType.EXPENSE));
         repository.put(2, new Payment(2, LocalDateTime.now(), 56900, new Category(2, "Salary"), PaymentType.INCOME));
-        repository.put(3, new Payment(3, LocalDateTime.now(), 1234, new Category(3, "Health"), PaymentType.EXPENSE));
+        repository.put(3, new Payment(3, LocalDateTime.of(2023, 2, 27, 16, 12), 1234, new Category(3, "Health"), PaymentType.EXPENSE));
         repository.put(4, new Payment(4, LocalDateTime.now(), 3400, new Category(4, "Education"), PaymentType.EXPENSE));
-        repository.put(5, new Payment(5, LocalDateTime.of(2023, 6, 27, 16, 39), 120, new Category(5, "Transport"), PaymentType.EXPENSE));
+        repository.put(5, new Payment(5, LocalDateTime.of(2023, 11, 1, 7, 39), 120, new Category(5, "Transport"), PaymentType.EXPENSE));
     }
 
     @Override
@@ -50,6 +50,10 @@ public class PaymentRepository implements ObjectRepository<Payment> {
 
     public LocalDate findLowestDate(){
         return repository.values().stream().map(Payment::getDateTime).min(Comparator.comparing(LocalDateTime::toLocalDate)).get().toLocalDate();
+    }
+
+    public LocalDate findHighestDate(){
+        return repository.values().stream().map(Payment::getDateTime).max(Comparator.comparing(LocalDateTime::toLocalDate)).get().toLocalDate();
     }
 
 

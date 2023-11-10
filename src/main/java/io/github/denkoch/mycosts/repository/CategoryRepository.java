@@ -8,7 +8,7 @@ public class CategoryRepository implements ObjectRepository<Category> {
 
     private Map<Integer, Category> repository = new HashMap<>();
 
-    {
+    public CategoryRepository() {
         repository.put(1, new Category(1, "Food"));
         repository.put(2, new Category(2, "Salary"));
         repository.put(3, new Category(3, "Health"));
