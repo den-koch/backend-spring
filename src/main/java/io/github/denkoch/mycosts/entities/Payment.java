@@ -13,6 +13,8 @@ public class Payment {
     private Integer id;
     private LocalDateTime dateTime;
     private Integer moneyAmount;
-    private Category category;
+    @NonNull
+    private Integer userId;
+    private Integer categoryId;
     private PaymentType paymentType;
 }

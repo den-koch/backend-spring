@@ -10,4 +10,6 @@ public class Category {
     @NonNull
     private Integer id;
     private String label;
+    @NonNull
+    private Integer userId;
 }
