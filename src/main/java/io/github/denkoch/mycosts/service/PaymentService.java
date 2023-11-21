@@ -2,6 +2,7 @@ package io.github.denkoch.mycosts.service;
 
 import io.github.denkoch.mycosts.entities.Payment;
 import io.github.denkoch.mycosts.repository.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ public class PaymentService {
 
     private PaymentRepository paymentRepository;
 
+    @Autowired
     public void setPaymentRepository(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
@@ -51,6 +53,10 @@ public class PaymentService {
 
     public LocalDate getLowestDate(){
         return paymentRepository.findLowestDate();
+    }
+
+    public LocalDate getHighestDate(){
+        return paymentRepository.findHighestDate();
     }
 
 }

@@ -39,7 +39,7 @@ public class PaymentFilterController {
                                       @ModelAttribute("category-id") Integer categoryId, Model model) {
 
         if (fromDate == null) fromDate = paymentService.getLowestDate();
-        if (toDate == null) toDate = LocalDate.now();
+        if (toDate == null) toDate = paymentService.getHighestDate();
 
         model.addAttribute("payments", paymentService.getFilteredPayments(fromDate, toDate, categoryId));
 

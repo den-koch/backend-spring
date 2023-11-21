@@ -39,12 +39,10 @@
 <div>
     <strong>Date:</strong>
     <div>From:
-        <span th:unless="${fromDate==null}" th:text="${#temporals.format(fromDate, 'dd.MM.yyyy')}"></span>
-        <span th:if="${fromDate==null}">First</span>
+        <span th:text="${#temporals.format(fromDate, 'dd.MM.yyyy')}"></span>
     </div>
     <div>To:
-        <span th:unless="${toDate==null}" th:text="${#temporals.format(toDate, 'dd.MM.yyyy')}"></span>
-        <span th:if="${toDate==null}">Last</span>
+        <span th:text="${#temporals.format(toDate, 'dd.MM.yyyy')}"></span>
     </div>
 </div>
 <div><strong>Category:</strong>
