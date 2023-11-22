@@ -11,30 +11,27 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Collection<Category> getCategories() {
-        return categoryRepository.findAll();
-    }
-
-    public void addCategory(Category category) {
-        if (categoryRepository.findAll().stream().noneMatch(cat -> cat.getLabel().equals(category.getLabel()))) {
-            categoryRepository.save(getMaxId() + 1, category);
-        }
-    }
-
-    public Category getCategory(String label) {
-        return categoryRepository.findByLabel(label);
+    public Collection<Category> getCategories(Integer userId) {
+        return categoryRepository.findAllByUserId(userId);
     }
 
     public Category getCategory(Integer id) {
         return categoryRepository.findById(id);
     }
 
+    public void addCategory(Integer userId, Category category) {
+        if (categoryRepository.findAllByUserId(userId).stream().noneMatch(cat -> cat.getLabel().equals(category.getLabel()))) {
+            categoryRepository.save(createId(), category);
+        }
+    }
+
+
     public void deleteCategory(Integer id) {
         categoryRepository.deleteById(id);
     }
 
-    public Integer getMaxId() {
-        return categoryRepository.findAll().stream().mapToInt(Category::getId).max().orElse(0);
+    public Integer createId() {
+        return categoryRepository.maxId()+1;
     }
 
 }

@@ -18,14 +18,14 @@ public class PaymentService {
         this.paymentRepository = paymentRepository;
     }
 
-    public Collection<Payment> getPayments() {
-        return paymentRepository.findAll();
+    public Collection<Payment> getPayments(Integer userId) {
+        return paymentRepository.findAllByUserId(userId);
     }
 
-    public Collection<Payment> getFilteredPayments(LocalDate from, LocalDate to, Integer id) {
+    public Collection<Payment> getFilteredPayments(Integer userId, LocalDate from, LocalDate to, Integer categoryId) {
 
-        Collection<Payment> paymentsByCategory = id == 0 ? paymentRepository.findAll() : paymentRepository.findByCategory(id);
-        Collection<Payment> paymentsByDate = paymentRepository.findByDate(from, to);
+        Collection<Payment> paymentsByCategory = categoryId == 0 ? paymentRepository.findAllByUserId(userId) : paymentRepository.findAllByCategoryId(userId, categoryId);
+        Collection<Payment> paymentsByDate = paymentRepository.findAllByDate(from, to);
 
         return paymentsByCategory.stream().filter(paymentsByDate::contains).toList();
 
@@ -36,7 +36,7 @@ public class PaymentService {
     }
 
     public void addPayment(Payment payment) {
-        paymentRepository.save(getMaxId() + 1, payment);
+        paymentRepository.save(createId(), payment);
     }
 
     public void updatePayment(Integer id, Payment payment) {
@@ -47,8 +47,8 @@ public class PaymentService {
         paymentRepository.deleteById(id);
     }
 
-    public Integer getMaxId() {
-        return paymentRepository.findAll().stream().mapToInt(Payment::getId).max().orElse(0);
+    public Integer createId() {
+        return paymentRepository.maxId()+1;
     }
 
     public LocalDate getLowestDate(){
