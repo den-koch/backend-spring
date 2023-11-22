@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/users/{id}/payments")
+@RequestMapping(value = "/users/{userId}/payments")
 public class PaymentEditController {
 
     private final PaymentService paymentService;
@@ -25,9 +25,9 @@ public class PaymentEditController {
         this.categoryService = categoryService;
     }
 
-    @ModelAttribute("id")
-    public Integer populateId(@PathVariable Integer id) {
-        return id;
+    @ModelAttribute("userId")
+    public Integer populateUserId(@PathVariable Integer userId) {
+        return userId;
     }
 
     @ModelAttribute("allPaymentsTypes")
@@ -36,32 +36,30 @@ public class PaymentEditController {
     }
 
     @ModelAttribute("allCategories")
-    public Collection<Category> populateCategories() {
-        return categoryService.getCategories();
+    public Collection<Category> populateCategories(@PathVariable Integer userId) {
+        return categoryService.getCategories(userId);
     }
 
 
-    @RequestMapping(value = "{payment-id}", method = RequestMethod.GET)
-    public String getPayment(@PathVariable("payment-id") Integer paymentId, Model model) {
+    @RequestMapping(value = "{paymentId}", method = RequestMethod.GET)
+    public String getPayment(@PathVariable Integer paymentId, Model model) {
 
         model.addAttribute("paymentId", paymentId);
         model.addAttribute("payment", paymentService.getPayment(paymentId));
         return "payment-edit";
     }
 
-    @RequestMapping(value = "{payment-id}", method = RequestMethod.POST, params = {"edit"})
-    public String postPayment(@PathVariable("payment-id") Integer paymentId,
-                              @ModelAttribute Payment payment,
-                              @RequestParam("categoryId") Integer categoryId) {
+    @RequestMapping(value = "{paymentId}", method = RequestMethod.POST, params = {"edit"})
+    public String postPayment(@PathVariable Integer paymentId,
+                              @ModelAttribute Payment payment) {
 
-        payment.setCategory(categoryService.getCategory(categoryId));
         paymentService.updatePayment(paymentId, payment);
 
-        return "redirect:{payment-id}";
+        return "redirect:{paymentId}";
     }
 
-    @RequestMapping(value = "{payment-id}", method = RequestMethod.POST, params = {"delete"})
-    public String postPayment(@PathVariable("payment-id") Integer paymentId) {
+    @RequestMapping(value = "{paymentId}", method = RequestMethod.POST, params = {"delete"})
+    public String postPayment(@PathVariable Integer paymentId) {
 
         paymentService.deletePayment(paymentId);
 

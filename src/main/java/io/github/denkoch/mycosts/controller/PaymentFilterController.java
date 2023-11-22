@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @Controller
-@RequestMapping(value = "/users/{id}/payments")
+@RequestMapping(value = "/users/{userId}/payments")
 public class PaymentFilterController {
 
     private final PaymentService paymentService;
@@ -23,25 +23,26 @@ public class PaymentFilterController {
         this.categoryService = categoryService;
     }
 
-    @ModelAttribute("id")
-    public Integer populateId(@PathVariable Integer id) {
-        return id;
+    @ModelAttribute("userId")
+    public Integer populateId(@PathVariable Integer userId) {
+        return userId;
     }
 
     @ModelAttribute("allCategories")
-    public Collection<Category> populateCategories() {
-        return categoryService.getCategories();
+    public Collection<Category> populateCategories(@PathVariable Integer userId) {
+        return categoryService.getCategories(userId);
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public String getFilteredPayments(@ModelAttribute("from-date") LocalDate fromDate,
+    public String getFilteredPayments(@PathVariable Integer userId,
+                                      @ModelAttribute("from-date") LocalDate fromDate,
                                       @ModelAttribute("to-date") LocalDate toDate,
                                       @ModelAttribute("category-id") Integer categoryId, Model model) {
 
         if (fromDate == null) fromDate = paymentService.getLowestDate();
         if (toDate == null) toDate = paymentService.getHighestDate();
 
-        model.addAttribute("payments", paymentService.getFilteredPayments(fromDate, toDate, categoryId));
+        model.addAttribute("payments", paymentService.getFilteredPayments(userId, fromDate, toDate, categoryId));
 
         model.addAttribute("fromDate", fromDate);
         model.addAttribute("toDate", toDate);

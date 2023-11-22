@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/users/{id}")
+@RequestMapping(value = "/users/{userId}")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -25,9 +25,9 @@ public class PaymentController {
         this.categoryService = categoryService;
     }
 
-    @ModelAttribute("id")
-    public Integer populateId(@PathVariable Integer id) {
-        return id;
+    @ModelAttribute("userId")
+    public Integer populateId(@PathVariable Integer userId) {
+        return userId;
     }
 
     @ModelAttribute("allPaymentsTypes")
@@ -36,32 +36,32 @@ public class PaymentController {
     }
 
     @ModelAttribute("allCategories")
-    public Collection<Category> populateCategories() {
-        return categoryService.getCategories();
+    public Collection<Category> populateCategories(@PathVariable Integer userId) {
+        return categoryService.getCategories(userId);
     }
 
     @RequestMapping(value = "/payments", method = RequestMethod.GET)
-    public String getPayments(Model model) {
+    public String getPayments(@PathVariable Integer userId, Model model) {
 
-        model.addAttribute("payments", paymentService.getPayments());
-        model.addAttribute("payment", new Payment(paymentService.getMaxId() + 1));
+        model.addAttribute("payments", paymentService.getPayments(userId));
+        model.addAttribute("payment", new Payment(paymentService.createId(), userId));
         return "payments";
     }
 
 
     @RequestMapping(value = "/payments", method = RequestMethod.POST, params = {"add"})
-    public String postPayments(@RequestParam("category-id") Integer categoryId,
-                               @ModelAttribute("payment") Payment payment) {
+    public String postPayments(@ModelAttribute("payment") Payment payment) {
 
-        payment.setCategory(categoryService.getCategory(categoryId));
         paymentService.addPayment(payment);
 
         return "redirect:payments";
     }
 
     @RequestMapping(value = "/payments", method = RequestMethod.POST, params = {"edit"})
-    public String postPayments(@RequestParam("payment-id") Integer paymentId) {
-        if (paymentService.getPayment(paymentId) != null) {
+    public String postPayments(@PathVariable Integer userId,
+                               @RequestParam("payment-id") Integer paymentId) {
+        Payment temp = paymentService.getPayment(paymentId);
+        if (temp != null && temp.getUserId().equals(userId)) {
             return "redirect:payments/" + paymentId;
         }
         return "redirect:payments";
