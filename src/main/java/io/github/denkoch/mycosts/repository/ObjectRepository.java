@@ -4,7 +4,7 @@ public interface ObjectRepository<T> {
 
     public void save(Integer i, T t);
 
-    public Iterable<T> findAll();
+    public Iterable<T> findAllByUserId(Integer i);
 
     public void deleteById(Integer i);
 
