@@ -5,7 +5,7 @@
     <title>Filters</title>
 </head>
 <body>
-<form action="#" th:action="@{/users/{id}/payments/filter(id=${id})}" method="post">
+<form action="#" th:action="@{/users/{user-id}/payments/filter(user-id=${userId})}" method="post">
     <div>
         Date:
         <table>
@@ -65,7 +65,11 @@
         <td th:text="${payment.paymentType.value}"/>
         <td th:text="${payment.moneyAmount}"/>
         <td th:text="${#temporals.format(payment.dateTime, 'dd.MM.yyyy HH:mm')}"/>
-        <td th:text="${payment.category.label}"/>
+        <div th:each="category:${allCategories}">
+            <div th:if="${category.id==payment.categoryId}" th:value="${category.label}">
+                <td th:text="${category.label}"/>
+            </div>
+        </div>
     </tr>
     </tbody>
 </table>

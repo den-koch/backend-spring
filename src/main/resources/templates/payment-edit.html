@@ -21,17 +21,24 @@
         <td th:text="${payment.paymentType.value}"/>
         <td th:text="${payment.moneyAmount}"/>
         <td th:text="${#temporals.format(payment.dateTime, 'dd.MM.yyyy HH:mm')}"/>
-        <td th:text="${payment.category.label}"/>
+        <div th:each="category:${allCategories}">
+            <div th:if="${category.id==payment.categoryId}" th:value="${category.label}">
+                <td th:text="${category.label}"/>
+            </div>
+        </div>
     </tr>
     </tbody>
 </table>
 
 <h2>Edit</h2>
 
-<form action="#" th:action="@{/users/{id}/payments/{payment-id}(id=${id}, payment-id=${paymentId})}"
+<form action="#" th:action="@{/users/{user-id}/payments/{payment-id}(user-id=${userId}, payment-id=${paymentId})}"
       th:object="${payment}" method="post">
     <div>
         <input type="hidden" th:field="*{id}"/>
+    </div>
+    <div>
+        <input type="hidden" th:field="*{userId}">
     </div>
     <div>
         <label>Type:</label>
@@ -52,8 +59,7 @@
     <div>
         <label>Category:</label>
         <label>
-            <select id="categoryId" name="categoryId">
-                <option value="0">Select...</option>
+            <select th:field="*{categoryId}">
                 <option th:each="category : ${allCategories}" th:value="${category.id}"
                         th:text="${category.label}"></option>
             </select>
@@ -63,7 +69,7 @@
         <button type="submit" name="edit" class="button">Edit</button>
     </div>
 </form>
-<form action="#" th:action="@{/users/{id}/payments/{payment-id}(id=${id}, payment-id=${paymentId})}" method="post">
+<form action="#" th:action="@{/users/{user-id}/payments/{payment-id}(user-id=${userId}, payment-id=${paymentId})}" method="post">
     <div>
         <button type="submit" name="delete" class="button">Delete</button>
     </div>

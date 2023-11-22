@@ -21,7 +21,7 @@
     </tbody>
 </table>
 <br>
-<form action="#" th:action="@{/users/{id}/categories(id=${id})}"
+<form action="#" th:action="@{/users/{user-id}/categories(user-id=${userId})}"
       th:object="${category}" method="post">
     <div>
         <input type="hidden" th:field="*{id}"/>
@@ -35,7 +35,7 @@
     </div>
 </form>
 <br>
-<form action="#" th:action="@{/users/{id}/categories(id=${id})}" method="post">
+<form action="#" th:action="@{/users/{user-id}/categories(user-id=${userId})}" method="post">
     <div>
         <label for="category-id">Id:</label>
         <input type="number" name="category-id" id="category-id"/>
