@@ -5,7 +5,7 @@
     <title>Filters</title>
 </head>
 <body>
-<form action="#" th:action="@{/users/{user-id}/payments/filter(user-id=${userId})}" method="post">
+<form action="#" th:action="@{/users/{user-id}/payments/filter(user-id=${userId})}" method="get">
     <div>
         Date:
         <table>
@@ -32,7 +32,7 @@
         </select>
     </div>
     <div>
-        <button type="submit" name="filter" class="button">Filter</button>
+        <button type="submit" class="button">Filter</button>
     </div>
 </form>
 <br>
