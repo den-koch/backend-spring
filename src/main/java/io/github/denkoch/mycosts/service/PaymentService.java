@@ -36,7 +36,8 @@ public class PaymentService {
     }
 
     public void addPayment(Payment payment) {
-        paymentRepository.save(createId(), payment);
+//        paymentRepository.save(createId(), payment);
+        paymentRepository.save(payment.getId(), payment);
     }
 
     public void updatePayment(Integer id, Payment payment) {

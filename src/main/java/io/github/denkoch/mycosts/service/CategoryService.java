@@ -20,8 +20,10 @@ public class CategoryService {
     }
 
     public void addCategory(Integer userId, Category category) {
-        if (categoryRepository.findAllByUserId(userId).stream().noneMatch(cat -> cat.getLabel().equals(category.getLabel()))) {
-            categoryRepository.save(createId(), category);
+//        if (categoryRepository.findAllByUserId(userId).stream().noneMatch(cat -> cat.getLabel().equals(category.getLabel()))) {
+//            categoryRepository.save(createId(), category);
+        if (categoryRepository.findAllByUserId(category.getUserId()).stream().noneMatch(cat -> cat.getLabel().equals(category.getLabel()))) {
+            categoryRepository.save(category.getId(), category);
         }
     }
 
