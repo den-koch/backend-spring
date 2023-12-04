@@ -57,7 +57,7 @@ public class PaymentController {
         return "redirect:payments";
     }
 
-    @RequestMapping(value = "/payments", method = RequestMethod.POST, params = {"edit"})
+    @RequestMapping(value = "/payments", method = RequestMethod.GET, params = {"edit"})
     public String postPayments(@PathVariable Integer userId,
                                @RequestParam("payment-id") Integer paymentId) {
         Payment temp = paymentService.getPayment(paymentId);

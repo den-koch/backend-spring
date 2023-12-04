@@ -35,32 +35,28 @@ public class PaymentFilterController {
 
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
     public String getFilteredPayments(@PathVariable Integer userId,
-                                      @ModelAttribute("from-date") LocalDate fromDate,
-                                      @ModelAttribute("to-date") LocalDate toDate,
-                                      @ModelAttribute("category-id") Integer categoryId, Model model) {
+                                      @RequestParam(value = "from-date", required = false) String from,
+                                      @RequestParam(value = "to-date", required = false) String to,
+                                      @RequestParam(value = "category-id", defaultValue = "0", required = false) Integer categoryId,
+                                      Model model) {
 
-        if (fromDate == null) fromDate = paymentService.getLowestDate();
-        if (toDate == null) toDate = paymentService.getHighestDate();
+        LocalDate fromDate;
+        LocalDate toDate;
+        if (from.isEmpty())
+            fromDate = paymentService.getLowestDate();
+        else
+            fromDate = LocalDate.parse(from);
+        if (to.isEmpty())
+            toDate = paymentService.getHighestDate();
+        else
+            toDate = LocalDate.parse(to);
 
         model.addAttribute("payments", paymentService.getFilteredPayments(userId, fromDate, toDate, categoryId));
 
         model.addAttribute("fromDate", fromDate);
         model.addAttribute("toDate", toDate);
         model.addAttribute("category", categoryService.getCategory(categoryId));
+
         return "filters";
     }
-
-    @RequestMapping(value = "/filter", method = RequestMethod.POST, params = {"filter"})
-    public String postPayments(@RequestParam(value = "from-date", required = false) LocalDate fromDate,
-                               @RequestParam(value = "to-date", required = false) LocalDate toDate,
-                               @RequestParam(value = "category-id", defaultValue = "0", required = false) Integer categoryId,
-                               RedirectAttributes redirectAttributes) {
-
-        redirectAttributes.addFlashAttribute("from-date", fromDate);
-        redirectAttributes.addFlashAttribute("to-date", toDate);
-        redirectAttributes.addFlashAttribute("category-id", categoryId);
-
-        return "redirect:filter";
-    }
-
 }
