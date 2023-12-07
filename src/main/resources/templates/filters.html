@@ -62,7 +62,10 @@
     <tbody>
     <tr th:each="payment:${payments}">
         <td th:text="${payment.id}"/>
-        <td th:text="${payment.paymentType.value}"/>
+        <td th:switch="${payment.paymentType.value}">
+            <span th:case="Expense">Expense</span>
+            <span th:case="Income">Income</span>
+        </td>
         <td th:text="${payment.moneyAmount}"/>
         <td th:text="${#temporals.format(payment.dateTime, 'dd.MM.yyyy HH:mm')}"/>
         <div th:each="category:${allCategories}">
